@@ -28,9 +28,9 @@ class CustomerLoginController extends Controller
      * 
      * @return JsonResponse
      */
-    public function __invoke(CustomeLoginRequest $customeLoginRequest): JsonResponse
+    public function __invoke(CustomeLoginRequest $customerLoginRequest): JsonResponse
     {
-        $credentials = $customeLoginRequest->validated();
+        $credentials = $customerLoginRequest->validated();
 
         $customer = $this->customerAuthenticationRepository->authenticate($credentials);
 
