@@ -15,7 +15,7 @@ class ServiceRepository implements ServiceInterface
      */
     public function all(): Builder
     {
-        return User::query()->orderBy('id', 'DESC');
+        return Service::query()->orderBy('id', 'DESC');
     }
 
     /**
