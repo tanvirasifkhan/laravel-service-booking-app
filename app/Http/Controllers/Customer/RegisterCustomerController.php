@@ -33,11 +33,9 @@ class RegisterCustomerController extends Controller
         $customer = $this->customerAuthenticationRepository->register($credentials);
 
         if($customer != NULL) {
-            $customer->token = $customer->createToken('customer-token')->plainTextToken;;
-
             return $this->successResponse(
-                successMessage:'Customer registered successfully.',
-                statusCode:201,
+                successMessage: 'Customer registered successfully.',
+                statusCode: 201,
                 data: new CustomerResource($customer)
             );
         }else{
