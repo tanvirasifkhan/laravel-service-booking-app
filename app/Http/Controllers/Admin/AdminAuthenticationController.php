@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use App\Repositories\AdminAuthenticationRepository;
+use Illuminate\Support\Facades\Hash;
 
 
 class AdminAuthenticationController extends Controller
@@ -31,22 +32,22 @@ class AdminAuthenticationController extends Controller
     {
         $credentials = $adminAuthenticationRequest->validated();
 
-        if($this->adminAuthenticationRepository->authenticate($credentials)) {
-            $user = $adminAuthenticationRequest->user();
+        $admin = $this->adminAuthenticationRepository->authenticate($credentials);
 
-            $user->token = $user->createToken('admin-token')->plainTextToken;
+        if($admin && Hash::check($credentials["password"], $admin->password)) { 
+            $admin->token = $admin->createToken('admin-token')->plainTextToken;
 
             return $this->successResponse(
                 successMessage: 'Authenticated successfully.',
                 statusCode: 200,
-                data: new UserResource($user)
+                data: new UserResource($admin)
             );
-        }else{
+        }else {
             return $this->errorResponse(
                 errorMessage: 'Invalid credentials! Authentication failed.',
                 statusCode: 401,
                 data: null
             );
-        }
+        }       
     }
 }
