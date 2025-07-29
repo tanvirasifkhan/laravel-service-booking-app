@@ -13,20 +13,19 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function(){
-            Route::prefix('api/admin')
+            Route::prefix('api/admins')
                 ->middleware('api')
                 ->group(base_path('routes/admin.php'));
-            Route::prefix('api/customer')
+            Route::prefix('api/customers')
                 ->middleware('api')
                 ->group(base_path('routes/customer.php'));
-            Route::prefix('api/service')
+            Route::prefix('api/services')
                 ->middleware('api')
                 ->group(base_path('routes/service.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append(AdminMiddleware::class)
-            ->append(CustomerMiddleware::class);
+        
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
