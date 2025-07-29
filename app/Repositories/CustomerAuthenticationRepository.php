@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Interfaces\AuthenticationInterface;
 use App\Interfaces\LogoutInterface;
 use App\Interfaces\RegistrationInterface;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 
@@ -28,11 +27,11 @@ class CustomerAuthenticationRepository implements AuthenticationInterface, Logou
      * Authenticate the admin user.
      *
      * @param array $credentials
-     * @return bool
+     * @return Customer
      */
-    public function authenticate(array $credentials): bool
+    public function authenticate(array $credentials): Customer
     {
-        return Auth::attempt($credentials);
+        return Customer::where("email", $credentials["email"])->first();        
     }
 
     /**
