@@ -22,7 +22,7 @@ class CreateBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'required|date|format:Y-m-d',
+            'date' => 'required|date|date_format:Y-m-d',
             'service_id' => 'required|integer|exists:services,id',
             'status' => 'required|in:pending,confirmed,cancelled'
         ];
@@ -37,7 +37,7 @@ class CreateBookingRequest extends FormRequest
     {
         return [
             'date.required' => 'You need to select a date.',
-            'date.date' => 'Invalid date.',
+            'date.date_format' => 'Invalid date.',
             'date.format' => 'The date must be in the format Y-m-d.',
             'service_id.required' => 'You need to select a service.',
             'service_id.integer' => 'The service ID must be a number.',
