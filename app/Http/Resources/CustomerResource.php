@@ -20,7 +20,7 @@ class CustomerResource extends JsonResource
             'email'=> $this->email,
             'phone'=> $this->phone,
             'address'=> $this->address,
-            'token' => $this->token
+            'token' => $this->when($this->token, $this->token)
         ];
     }
 }
