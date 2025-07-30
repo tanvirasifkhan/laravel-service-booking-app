@@ -1,61 +1,108 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About The Project
 
-## About Laravel
+  
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is basically a customer service API application built using PHP 8.4, Laravel 12, MySQL. This project contains backend API endpoints like admin/customer authentication including both login and registration, creating service, booking a specific service etc.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack used for this project
 
-## Learning Laravel
+  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. PHP 8.4.5
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. MySQL 8.4.5
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. phpMyadmin 5.2
 
-## Laravel Sponsors
+4. Laravel 12.x
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. PHP Unit for feature testing
 
-### Premium Partners
+6. REST API using SOLID Design Pattern
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+7. Ubuntu 25.04 LTS as OS
 
-## Contributing
+8. Postman for API testing and documentation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+  
 
-## Code of Conduct
+## Necessary Softwares to Download
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  
 
-## Security Vulnerabilities
+Since I am a Ubuntu OS user, I used Ubuntu 25.04 LTS for development. You can use windows if you want. But apart from that, a few kinds of softwares need to be installed and running into your system.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+  
 
-## License
+For Linux we need to install and configure **PHP >= 8.3**, **MySQL 8.4**, **PhpMyAdmin 5.2** and [Composer](https://getcomposer.org/download/) for PHP package management in your local system as well.After installation, you can check it by `composer --version`, `php --version`, `mysql --version` commands.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**You can download XAMPP for Windows from [apachefriends.org](https://www.apachefriends.org/) and install. This way you can install both PHP , MySQL and PHPMyAdmin. Make sure you start the apache, mysql, phpmyadmin by opening the xampp application**
+
+After the successful installation and configuration of all the softwares, you are good to go.  
+
+## How to get the project live 
+
+To get the application up and running you need to follow couple of steps. Lets go with the steps one by one  
+
+### STEP #1: Clone the github repository and installing dependencies  
+
+First you need to clone the Github repository from the link given below 
+
+`git clone https://github.com/tanvirasifkhan/laravel-service-booking-app.git`  
+
+and `cd /laravel-service-booking-app` . Then  `touch .env` and `cp .env.example .env` (You can manually create .env file and copy .env.example content to .env file)
+
+***Configure database credentials***
+
+Now its time to configure backend `.env` file. Configure your database credentials according to your database name, username, password. 
+
+```
+
+DB_CONNECTION=mysql
+
+DB_HOST=127.0.0.1
+
+DB_PORT=3306
+
+DB_DATABASE=service_booking_app
+
+DB_USERNAME=root
+
+DB_PASSWORD=
+
+```
+
+**Than run the following commands**
+
+  `composer install`
+
+ `php artisan key:generate`
+  
+
+### STEP #2: Running The Application  
+
+Now access your `phpMyadmin` panel inside your browser on port `localhost/phpmyadmin` and create a database called `service_booking_app`. By the way you can create database with any name. You just need to configure your `.env` accordingly. Now guess what, you are good to access the whole application in the browser.  
+
+**Follow the commands**
+
+ Run `php artisan migrate` to run the database migration and then run `php artisan optimize:clear` to clear all the cache. Finally run `php artisan serve` command to run the server at `localhost:8000`.
+
+Run this command `php artisan db:seed`. There will be an admin created with the following credentials.
+  * Email : admin@gmail.com and Password: admin
+
+and there will be 2 bookings, 5 services created.There will also 2 customers be created with the following credentials
+  * Email : asif@gmail.com and Password: asifkhan
+  * Email: tanvir@gmail.com and Password: tanvir
+  
+You can login using as admin/customer to perform respective API tasks.
+
+### Features including permission
+
+Some of the endpoints require admin specific bearer token, like service crud, all booking list and some of them require customer specific bearer token, like booking a service, authenticated customer specific booking list etc. You can run `php artisan route:list` to view all the routes available in this application.
+
+You can now play around with the application.  
+
+Hope, all the API endpoints run smoothly. Enjoy and thanks. If you have any query, then send an email to `asifkhan.github@gmail.com`. Thanks
