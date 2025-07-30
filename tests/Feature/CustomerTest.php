@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Customer;
+use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
@@ -124,6 +125,30 @@ class CustomerTest extends TestCase
 
         $this->getJson('api/customers/bookings')
             ->assertOk()
+            ->assertJsonStructure(['successMessage', 'data', 'statusCode']);
+    }
+
+    public function test_validation_error_while_creating_booking(): void
+    {
+        Sanctum::actingAs($this->createCustomer(), ['*']);
+
+        $this->postJson('api/customers/bookings', [])
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['date', 'service_id', 'status']);
+    }
+
+    public function test_successfully_creating_booking(): void
+    {
+        Sanctum::actingAs($this->createCustomer(), ['*']);
+
+        $service = Service::factory()->create();
+
+        $this->postJson('api/customers/bookings', [
+                'date' => '2023-10-01',
+                'service_id' => $service->id,
+                'status' => 'confirmed'
+            ])
+            ->assertCreated()
             ->assertJsonStructure(['successMessage', 'data', 'statusCode']);
     }
 }
