@@ -23,6 +23,11 @@ class CustomerTest extends TestCase
         ]);
     }
 
+    private function checkAuthentication(Customer $customer): void
+    {
+        Sanctum::actingAs($customer, ['*']);
+    }
+
     public function test_customer_registration_validation_error(): void
     {
         $this->postJson('api/customers/register', [])
@@ -112,7 +117,7 @@ class CustomerTest extends TestCase
 
     public function test_customer_successfull_loggedout(): void
     {
-        Sanctum::actingAs($this->createCustomer(), ['*']);
+        $this->checkAuthentication($this->createCustomer());
 
         $this->postJson('api/customers/logout')
             ->assertOk()
@@ -121,7 +126,7 @@ class CustomerTest extends TestCase
 
     public function test_read_all_customer_booking_list(): void
     {
-        Sanctum::actingAs($this->createCustomer(), ['*']);
+        $this->checkAuthentication($this->createCustomer());
 
         $this->getJson('api/customers/bookings')
             ->assertOk()
@@ -130,21 +135,36 @@ class CustomerTest extends TestCase
 
     public function test_validation_error_while_creating_booking(): void
     {
-        Sanctum::actingAs($this->createCustomer(), ['*']);
+        $this->checkAuthentication($this->createCustomer());
 
         $this->postJson('api/customers/bookings', [])
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['date', 'service_id', 'status']);
     }
 
-    public function test_successfully_creating_booking(): void
+    public function test_creating_booking_from_past(): void
     {
-        Sanctum::actingAs($this->createCustomer(), ['*']);
+        $this->checkAuthentication($this->createCustomer());
 
         $service = Service::factory()->create();
 
         $this->postJson('api/customers/bookings', [
-                'date' => '2023-10-01',
+                'date' => '2024-10-01',
+                'service_id' => $service->id,
+                'status' => 'confirmed'
+            ])
+            ->assertUnprocessable()
+            ->assertJsonStructure(['errorMessage', 'data', 'statusCode']);
+    }
+
+    public function test_successfully_creating_booking(): void
+    {
+        $this->checkAuthentication($this->createCustomer());
+
+        $service = Service::factory()->create();
+
+        $this->postJson('api/customers/bookings', [
+                'date' => '2025-10-01',
                 'service_id' => $service->id,
                 'status' => 'confirmed'
             ])
