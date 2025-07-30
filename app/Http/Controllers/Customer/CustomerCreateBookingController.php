@@ -32,6 +32,16 @@ class CustomerCreateBookingController extends Controller
 
         $bookingData['customer_id'] = auth()->id();
 
+        $bookingDate = Carbon::parse($bookingData['date'])->format('Y-m-d');
+        
+        if($bookingDate < Carbon::today()->format('Y-m-d')) {
+            return $this->errorResponse(
+                errorMessage: 'Booking date cannot be in the past.',
+                statusCode: 422,
+                data: null
+            );
+        }
+
         $booking = $this->customerBookingRepository->create($bookingData);
 
         return $this->successResponse(
