@@ -45,7 +45,7 @@ class AdminAuthenticationController extends Controller
         }else {
             return $this->errorResponse(
                 errorMessage: 'Invalid credentials! Authentication failed.',
-                statusCode: 401,
+                statusCode: 422,
                 data: null
             );
         }       
